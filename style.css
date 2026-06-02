@@ -173,14 +173,22 @@ nav ul{
 .logo{
     display:flex;
     align-items:center;
-    gap:10px;
+    gap:15px;
 }
 
 .logo img{
-    width:150px;
-    height:150px;
-    border-radius:50%;
-    object-fit:cover;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: white;
+    padding: 5px;
+}
+
+.logo h2 {
+    color: white;
+    font-size: 2rem;
+    margin: 0;
 }
 .card img{
     width: 100%;
