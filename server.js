@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql2");
+const mongoose = require("mongoose");
 const cors = require("cors");
 
 const app = express();
@@ -8,77 +8,107 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Ropah2106!", 
-    database: "feedback_system"
-});
+// MongoDB Connection
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => console.log("MongoDB Connected"))
+.catch(err => console.log(err));
 
-db.connect((err) => {
-    if (err) {
-        console.log("Database connection failed");
-        return;
+// Feedback Schema
+const feedbackSchema = new mongoose.Schema({
+    name: String,
+    email: String,
+    test_name: String,
+    rating: String,
+    feedback: String,
+    date: {
+        type: Date,
+        default: Date.now
     }
-    console.log("Connected to MySQL");
 });
 
-app.post("/submit-feedback", (req, res) => {
+const Feedback = mongoose.model("Feedback", feedbackSchema);
 
-    const { name, email, test_name, rating, feedback } = req.body;
+// Submit Feedback
+app.post("/submit-feedback", async (req, res) => {
+     console.log("Received data:", req.body);
+    try {
+        const { name, email, test_name, rating, feedback } = req.body;
 
-    const sql =
-    "INSERT INTO feedback (name, email, test_name, rating, feedback) VALUES (?, ?, ?, ?, ?)";
+        const newFeedback = new Feedback({
+            name,
+            email,
+            test_name,
+            rating,
+            feedback
+        });
 
-    db.query(
-        sql,
-        [name, email, test_name, rating, feedback],
-        (err, result) => {
+        await newFeedback.save();
 
-            if (err) {
-                console.log(err);
-                res.status(500).send("Error saving feedback");
-                return;
+        res.send("Feedback submitted successfully!");
+    } catch (error) {
+        console.log(error);
+        res.status(500).send("Error saving feedback");
+    }
+});
+
+// Get All Feedback
+app.get("/feedbacks", async (req, res) => {
+    try {
+        const feedbacks = await Feedback.find().sort({ date: -1 });
+        res.json(feedbacks);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+});
+
+// Rating Statistics
+app.get("/rating-stats", async (req, res) => {
+    try {
+        const stats = await Feedback.aggregate([
+            {
+                $group: {
+                    _id: "$rating",
+                    total: { $sum: 1 }
+                }
             }
+        ]);
 
-            res.send("Feedback submitted successfully!");
-        }
-    );
-});
-app.get("/rating-stats", (req, res) => {
+        const formatted = stats.map(item => ({
+            rating: item._id,
+            total: item.total
+        }));
 
-    const sql = `
-        SELECT rating, COUNT(*) AS total
-        FROM feedback
-        GROUP BY rating
-    `;
-
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json(err);
-        }
-
-        res.json(results);
-    });
+        res.json(formatted);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
-app.get("/test-stats", (req, res) => {
+// Test Statistics
+app.get("/test-stats", async (req, res) => {
+    try {
+        const stats = await Feedback.aggregate([
+            {
+                $group: {
+                    _id: "$test_name",
+                    total: { $sum: 1 }
+                }
+            }
+        ]);
 
-    const sql = `
-        SELECT test_name, COUNT(*) AS total
-        FROM feedback
-        GROUP BY test_name
-    `;
+        const formatted = stats.map(item => ({
+            test_name: item._id,
+            total: item.total
+        }));
 
-    db.query(sql, (err, results) => {
-        if (err) {
-            return res.status(500).json(err);
-        }
-
-        res.json(results);
-    });
+        res.json(formatted);
+    } catch (error) {
+        res.status(500).json(error);
+    }
 });
 
-app.listen(3000, () => {
-    console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
