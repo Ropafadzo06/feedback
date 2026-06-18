@@ -12,7 +12,7 @@
     <header>
         <div class="logo">
            <img src="IMAGES/aabb.png " alt="Lab Logo"> 
-            <h2>🧪 CimasMEDLABS Feedback System</h2>
+            <h2>🧪MEDLABS Feedback System</h2>
         </div>
 
         <nav>
@@ -26,15 +26,15 @@
     </header>
 
     <!-- Hero Section -->
-    <section id="home" class="hero"></section>
-        <div class="hero-content">
-            <h1>Your Opinion Matters</h1>
-            <p>
-                Help us improve our laboratory services by sharing
-                your experience with us.
-            </p>
-        </div>
-    </section>
+    <section id="home" class="hero">
+    <div class="hero-content">
+        <h1>Your Opinion Matters</h1>
+        <p>
+            Help us improve our laboratory services by sharing
+            your experience with us.
+        </p>
+    </div>
+</section>
 
     <!-- Main Content -->
     <div class="container">
@@ -46,13 +46,13 @@
             <form id="feedbackForm">
 
                 <label>Full Name</label>
-                <input type="text" placeholder="Enter your name">
+                <input type="text" id="name" placeholder="Enter your name">
 
                 <label>Email Address</label>
-                <input type="email" placeholder="Enter your email">
+               <input type="email" id="email" placeholder="Enter your email">
 
                 <label>Test Conducted</label>
-                <select>
+                <select id="test_name">
                     <option>Select Test</option>
                     <option>Full Blood Count (FBC)</option>
                     <option>Blood Grouping</option>
@@ -64,7 +64,7 @@
                 </select>
 
                 <label>Rate Our Service</label>
-                <select>
+                <select id="rating">
                     <option>⭐⭐⭐⭐⭐ Excellent</option>
                     <option>⭐⭐⭐⭐ Very Good</option>
                     <option>⭐⭐⭐ Good</option>
@@ -73,8 +73,13 @@
                 </select>
 
                 <label>Your Feedback</label>
-                <textarea rows="5" placeholder="Write your comments here..."></textarea>
-
+                <textarea
+    id="feedbackText"
+    name="feedback"
+    rows="5"
+    placeholder="Write your comments here..."
+    required>
+</textarea>
                 <button type="submit">Submit Feedback</button>
 
             </form>
@@ -130,13 +135,54 @@
                         </ul>
                 </div> 
             </section>
-                
-                
-                 <section id="contact" class="contact-section">
-                   <h2>Contact Us</h2>
-                    <p>Phone: +263 71 853 6600 / +263 71 264 0639 </p>
-                      <p>Email:Medlabsenquiries.co.zw.co.zw</p>
+   
+            <section id="contact" class="contact-section">
+    <h2>Contact Us</h2>
+    <p>Phone: +263 71 853 6600 / +263 71 264 0639</p>
+    <p>Email: Medlabsenquiries.co.zw.co.zw</p>
 </section>
+
+</div>
+
+<script>
+document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const test_name = document.getElementById("test_name").value;
+    const rating = document.getElementById("rating").value;
+    const feedback = document.getElementById("feedbackText").value;
+
+    console.log("Feedback value:", feedback);
+
+    try {
+        const response = await fetch ("/submit-feedback",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                test_name,
+                rating,
+                feedback
+            })
+        });
+
+        const message = await response.text();
+        alert(message);
+
+    } catch (error) {
+        alert("Error connecting to server");
+        console.error(error);
+    }
+});
+</script>
+</body>
+</html>
+                
                 
                 
                 
