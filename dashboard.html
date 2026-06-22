@@ -1,168 +1,224 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-    <title>Feedback Dashboard</title>
+<title>Feedback Dashboard</title>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 10px;
-            margin: 0;
-        }
+<style>
 
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+body{
+font-family:Arial,sans-serif;
+padding:10px;
+margin:0;
+}
 
-        .dashboard-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
+h1{
+text-align:center;
+margin-bottom:20px;
+}
 
-        .chart-container {
-            width: 450px;
-            height: 320px;
-        }
+.dashboard-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+}
 
-        canvas {
-            width: 100% !important;
-            height: 250px !important;
-        }
+.chart-container{
+width:450px;
+height:320px;
+}
 
-        h2 {
-            text-align: center;
-            font-size: 18px;
-        }
+canvas{
+width:100%!important;
+height:250px!important;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
+h2{
+text-align:center;
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:30px;
+}
 
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+th,td{
+border:1px solid #ddd;
+padding:10px;
+}
+
+th{
+background:#f2f2f2;
+}
+
+</style>
+
 </head>
 
 <body>
 
-    <h1>Laboratory Feedback Dashboard</h1>
+<h1>Laboratory Feedback Dashboard</h1>
 
-    <div class="dashboard-container">
+<div class="dashboard-container">
 
-        <div class="chart-container">
-            <h2>Ratings Distribution</h2>
-            <canvas id="ratingChart"></canvas>
-        </div>
+<div class="chart-container">
+<h2>Ratings Distribution</h2>
+<canvas id="ratingChart"></canvas>
+</div>
 
-        <div class="chart-container">
-            <h2>Tests Conducted</h2>
-            <canvas id="testChart"></canvas>
-        </div>
+<div class="chart-container">
+<h2>Tests Conducted</h2>
+<canvas id="testChart"></canvas>
+</div>
 
-    </div>
+</div>
 
-    <h2>Recent Feedback</h2>
+<h2>Recent Feedback</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Test</th>
-                <th>Rating</th>
-                <th>Feedback</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody id="feedbackTable">
-        </tbody>
-    </table>
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Test</th>
+<th>Rating</th>
+<th>Feedback</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="feedbackTable"></tbody>
+
+</table>
 
 <script>
 
-async function loadRatingChart() {
+async function loadRatingChart(){
 
-    const response = await fetch("http://localhost:3000/rating-stats");
-    const data = await response.json();
+try{
 
-    const labels = data.map(item => item.rating);
-    const totals = data.map(item => item.total);
+const response=await fetch("/rating-stats");
 
-    new Chart(document.getElementById("ratingChart"), {
-        type: "pie",
-        data: {
-            labels: labels,
-            datasets: [{
-                data: totals
-            }]
-        }
-    });
+if(!response.ok){
+throw new Error("Could not load rating stats");
 }
 
-async function loadTestChart() {
+const data=await response.json();
 
-    const response = await fetch("http://localhost:3000/test-stats");
-    const data = await response.json();
+new Chart(
+document.getElementById("ratingChart"),
+{
+type:"pie",
 
-    const labels = data.map(item => item.test_name);
-    const totals = data.map(item => item.total);
+data:{
+labels:data.map(item=>item.rating),
 
-    new Chart(document.getElementById("testChart"), {
-        type: "bar",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Number of Feedback Entries",
-                data: totals
-            }]
-        }
-    });
+datasets:[
+{
+label:"Ratings",
+data:data.map(item=>item.total)
+}
+]
+}
+}
+);
+
+}catch(error){
+console.log(error);
 }
 
-async function loadFeedbacks() {
-
-    const response = await fetch("http://localhost:3000/feedbacks");
-    const feedbacks = await response.json();
-
-    const table = document.getElementById("feedbackTable");
-
-    feedbacks.forEach(item => {
-
-        const row = `
-            <tr>
-                <td>${item.name || ""}</td>
-                <td>${item.email || ""}</td>
-                <td>${item.test_name || ""}</td>
-                <td>${item.rating || ""}</td>
-                <td>${item.feedback || ""}</td>
-                <td>${new Date(item.date).toLocaleDateString()}</td>
-            </tr>
-        `;
-
-        table.innerHTML += row;
-    });
 }
+
+async function loadTestChart(){
+
+try{
+
+const response=await fetch("/test-stats");
+
+if(!response.ok){
+throw new Error("Could not load test stats");
+}
+
+const data=await response.json();
+
+new Chart(
+document.getElementById("testChart"),
+{
+type:"bar",
+
+data:{
+labels:data.map(item=>item.test_name),
+
+datasets:[
+{
+label:"Feedback Entries",
+data:data.map(item=>item.total)
+}
+]
+}
+}
+);
+
+}catch(error){
+console.log(error);
+}
+
+}
+
+async function loadFeedbacks(){
+
+try{
+
+const response=await fetch("/feedbacks");
+
+if(!response.ok){
+throw new Error("Could not load feedback");
+}
+
+const feedbacks=await response.json();
+
+const table=document.getElementById("feedbackTable");
+
+table.innerHTML="";
+
+feedbacks.forEach(item=>{
+
+table.innerHTML+=`
+<tr>
+<td>${item.name||""}</td>
+<td>${item.email||""}</td>
+<td>${item.test_name||""}</td>
+<td>${item.rating||""}</td>
+<td>${item.feedback||""}</td>
+<td>${item.date?new Date(item.date).toLocaleDateString():""}</td>
+</tr>
+`;
+
+});
+
+}catch(error){
+console.log(error);
+}
+
+}
+
+window.onload=function(){
 
 loadRatingChart();
+
 loadTestChart();
+
 loadFeedbacks();
+
+}
 
 </script>
 
 </body>
+
 </html>
