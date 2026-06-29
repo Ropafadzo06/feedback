@@ -43,9 +43,11 @@ app.post("/submit-feedback", async (req, res) => {
             feedback
         });
 
-        await newFeedback.save();
+     const saved = await newFeedback.save();
 
-        res.send("Feedback submitted successfully!");
+console.log("Saved successfully:", saved);
+
+res.send("Feedback submitted successfully!"); 
     } catch (error) {
         console.log(error);
         res.status(500).send("Error saving feedback");
