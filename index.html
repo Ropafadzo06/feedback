@@ -1,189 +1,544 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratory Feedback System</title>
-    <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Laboratory Feedback System</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">
-           <img src="IMAGES/aabb.png " alt="Lab Logo"> 
-            <h2>🧪MEDLABS Feedback System</h2>
-        </div>
+<header>
 
-        <nav>
-            <ul>
-             <li><a href="#home">Home</a></li>
+<div class="logo">
+
+<img src="IMAGES/aabb.png" alt="Lab Logo">
+
+<h2>🧪 MEDLABS Feedback System</h2>
+
+</div>
+
+<nav>
+
+<ul>
+
+<li><a href="#home">Home</a></li>
 <li><a href="#feedback">Feedback</a></li>
 <li><a href="#services">Services</a></li>
-<li><a href="#contact">Contact</a></li>   
-            </ul>
-        </nav>
-    </header>
+<li><a href="#contact">Contact</a></li>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-    <div class="hero-content">
-        <h1>Your Opinion Matters</h1>
-        <p>
-            Help us improve our laboratory services by sharing
-            your experience with us.
-        </p>
-    </div>
+</ul>
+
+</nav>
+
+</header>
+
+
+<section id="home" class="hero">
+
+<div class="hero-content">
+
+<h1>Your Opinion Matters</h1>
+
+<p>
+Help us improve our laboratory services by sharing your experience.
+</p>
+
+</div>
+
 </section>
 
-    <!-- Main Content -->
-    <div class="container">
 
-        <!-- Feedback Form -->
-       <section id="feedback" class="feedback-section">
-            <h2>Patient Feedback Form</h2>
+<div class="container">
 
-            <form id="feedbackForm">
 
-                <label>Full Name</label>
-                <input type="text" id="name" placeholder="Enter your name">
+<section id="feedback" class="feedback-section">
 
-                <label>Email Address</label>
-               <input type="email" id="email" placeholder="Enter your email">
+<h2>Patient Feedback Form</h2>
 
-                <label>Test Conducted</label>
-                <select id="test_name">
-                    <option>Select Test</option>
-                    <option>Full Blood Count (FBC)</option>
-                    <option>Blood Grouping</option>
-                    <option>HIV Test</option>
-                    <option>Liver Function Test</option>
-                    <option>Kidney Function Test</option>
-                    <option>Urine Analysis</option>
-                    <option>Histology</option>
-                </select>
+<form id="feedbackForm">
 
-                <label>Rate Our Service</label>
-                <select id="rating">
-                    <option>⭐⭐⭐⭐⭐ Excellent</option>
-                    <option>⭐⭐⭐⭐ Very Good</option>
-                    <option>⭐⭐⭐ Good</option>
-                    <option>⭐⭐ Fair</option>
-                    <option>⭐ Poor</option>
-                </select>
 
-                <label>Your Feedback</label>
-                <textarea
-    id="feedbackText"
-    name="feedback"
-    rows="5"
-    placeholder="Write your comments here..."
-    required>
+<label>Full Name</label>
+
+<input
+type="text"
+id="name"
+required
+placeholder="Enter your name">
+
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+required
+placeholder="Enter your email">
+
+
+<label>Department</label>
+
+<select id="department" required>
+
+<option value="">Select Department</option>
+
+<option>Biochemistry</option>
+
+<option>Haematology</option>
+
+<option>Immunology/Serology</option>
+
+<option>Microbiology</option>
+
+<option>Genomics</option>
+
+<option>Cytology</option>
+
+<option>Histopathology</option>
+
+</select>
+
+
+<label>Test Conducted</label>
+
+<select id="test_name" required>
+
+<option value="">Select Test</option>
+
+</select>
+
+
+<label>Rate Our Service</label>
+
+<select id="rating">
+
+<option>⭐⭐⭐⭐⭐ Excellent</option>
+
+<option>⭐⭐⭐⭐ Very Good</option>
+
+<option>⭐⭐⭐ Good</option>
+
+<option>⭐⭐ Fair</option>
+
+<option>⭐ Poor</option>
+
+</select>
+
+
+<label>Your Feedback</label>
+
+<textarea
+id="feedbackText"
+rows="5"
+required
+placeholder="Write your comments here...">
 </textarea>
-                <button type="submit">Submit Feedback</button>
 
-            </form>
-        </section>
 
-        <!-- Services Section -->
-        <section id="services" class="services-section">
-            <h2>Available Laboratory Tests</h2>
+<button type="submit">
 
-            <div class="cards">
+Submit Feedback
 
-                <div class="card">
-                    <img src="IMAGES/test1.png" alt="Hematology Test">
+</button>
 
-                    <h3>🩸 Stool Multiplex Test</h3>
-                    
-                    <ul>
-                        <li>Sample Type: Stool sample/ rectal swab</li>
-                        <li>TAT:2hours -6 hours</li>
-                        <li>Blood Grouping</li>
-                    </ul>
-                </div>
+</form>
 
-                <div class="card">
-                    <img src="IMAGES/test2.png" alt="Hematology Test">
+</section>
 
-                    <h3>🧪 Meningo-encephalitis viral PCR screen</h3>
-                    <ul>
-                        <li>Sample Type: Stool sample/ csf</li>
-                        <li>TAT:6 hours</li>
-                        <li>Kidney Function Test</li>
-                        <li>Lipid Profile</li>
-                    </ul>
-                </div>
 
-                <div class="card">
-                    <img src="IMAGES/test3.png" alt="Hematology Test">
-                    <h3>🔬 HPV 20 Panel Genetic Screening</h3>
-                    <ul>
-                        <li>Sample Type: First catch urine/high vaginal swab/Urethral swab</li>
-                        <li>TAT:6 hours</li>
-                        <li>Hepatitis C</li>
-                        <li>Syphilis Testing</li>
-                    </ul>
-                </div>
+<section id="services" class="services-section">
 
-                <div class="card">
-                    <img src="IMAGES/test4.png" alt="Hematology Test">
-                    <h3>🧫STI 12 panel genetic Screening </h3>
-                    <ul>
-                        <li>Sample Type: First catch urine/high vaginal swab/Urethral swab</li>
-                        <li>TAT:6 hours</li>
-                        </ul>
-                </div> 
-            </section>
-   
-            <section id="contact" class="contact-section">
-    <h2>Contact Us</h2>
-    <p>Phone: +263 71 853 6600 / +263 71 264 0639</p>
-    <p>Email: Medlabsenquiries.co.zw.co.zw</p>
+<h2>Available Laboratory Services</h2>
+
+<p>
+
+Select a department in the feedback form to see tests.
+
+</p>
+
+</section>
+
+
+<section id="contact" class="contact-section">
+
+<h2>Contact Us</h2>
+
+<p>Phone: +263 71 853 6600</p>
+
+<p>Email: medlabsenquiries.co.zw</p>
+
 </section>
 
 </div>
 
+
 <script>
-document.getElementById("feedbackForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const test_name = document.getElementById("test_name").value;
-    const rating = document.getElementById("rating").value;
-    const feedback = document.getElementById("feedbackText").value;
 
-    console.log("Feedback value:", feedback);
+const tests = {
 
-    try {
-        const response = await fetch ("/submit-feedback",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                test_name,
-                rating,
-                feedback
-            })
-        });
 
-        const message = await response.text();
-        alert(message);
+Biochemistry:[
 
-    } catch (error) {
-        alert("Error connecting to server");
-        console.error(error);
-    }
-});
+"24 hour Urine Protein",
+
+"Vitamin D",
+
+"Alanine Transaminase",
+
+"Albumin",
+
+"Amylase",
+
+"Blood Urea Nitrogen",
+
+"Cardiac Enzymes",
+
+"Creatinine",
+
+"Electrolytes",
+
+"Ferritin",
+
+"Glucose Fasting",
+
+"HBA1C",
+
+"Insulin",
+
+"Lipid Profile",
+
+"Liver Function Test",
+
+"Magnesium",
+
+"Prolactin",
+
+"Thyroid Function Tests",
+
+"Troponin",
+
+"Urea and Electrolytes",
+
+"Vitamin B12"
+
+],
+
+
+Haematology:[
+
+"Blood Grouping",
+
+"Blood Parasites",
+
+"CD4 Count",
+
+"D-Dimer",
+
+"ESR",
+
+"Full Blood Count (FBC)",
+
+"Haemoglobin Electrophoresis",
+
+"Malaria ICT",
+
+"Protein C",
+
+"Protein S",
+
+"Prothrombin Time",
+
+"Reticulocyte Count",
+
+"Sickle Cell Screen"
+
+],
+
+
+"Immunology/Serology":[
+
+"Allergy Test",
+
+"Hepatitis B Screen",
+
+"Hepatitis C",
+
+"HIV Viral Load",
+
+"HIV Antibody",
+
+"Rubella",
+
+"SARS-CoV-2 PCR",
+
+"Syphilis Test",
+
+"TORCH PANEL"
+
+],
+
+
+Microbiology:[
+
+"Blood Culture",
+
+"Cryptococcus Antigen",
+
+"Fungal Culture",
+
+"GeneXpert MTB",
+
+"H.Pylori",
+
+"High Vaginal Swab",
+
+"HPV PCR",
+
+"Pregnancy Test",
+
+"Semen Analysis",
+
+"Stool MCS",
+
+"Urine Analysis",
+
+"Urine Culture"
+
+],
+
+
+Genomics:[
+
+"Clostridium difficile DNA PCR",
+
+"STI 12 Panel",
+
+"HPV 20 Panel",
+
+"Meningo-encephalitis PCR",
+
+"Respiratory Virus PCR",
+
+"Stool Multiplex PCR"
+
+],
+
+
+Cytology:[
+
+"Cytology Fluids",
+
+"Cytology FNA",
+
+"PAP Test",
+
+"Gastric Washings",
+
+"Cervical Screening"
+
+],
+
+
+Histopathology:[
+
+"Category 1",
+
+"Category 2",
+
+"Category 3",
+
+"Histology",
+
+"Ophid Leep",
+
+"Trephine Processing"
+
+]
+
+};
+
+
+
+document
+.getElementById("department")
+.addEventListener(
+"change",
+function(){
+
+const selected =
+this.value;
+
+const testsList =
+document
+.getElementById(
+"test_name"
+);
+
+testsList.innerHTML =
+`<option value="">Select Test</option>`;
+
+
+if(
+tests[selected]
+){
+
+tests[selected]
+.forEach(
+test=>{
+
+const option =
+document
+.createElement(
+"option"
+);
+
+option.value =
+test;
+
+option.textContent =
+test;
+
+testsList
+.appendChild(
+option
+);
+
+}
+
+);
+
+}
+
+}
+
+);
+
+
+
+document
+.getElementById(
+"feedbackForm"
+)
+.addEventListener(
+"submit",
+
+async function(e){
+
+e.preventDefault();
+
+
+const data = {
+
+name:
+document
+.getElementById(
+"name"
+)
+.value,
+
+email:
+document
+.getElementById(
+"email"
+)
+.value,
+
+department:
+document
+.getElementById(
+"department"
+)
+.value,
+
+test_name:
+document
+.getElementById(
+"test_name"
+)
+.value,
+
+rating:
+document
+.getElementById(
+"rating"
+)
+.value,
+
+feedback:
+document
+.getElementById(
+"feedbackText"
+)
+.value
+
+};
+
+
+try{
+
+const response =
+await fetch(
+"/submit-feedback",
+{
+
+method:
+"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(
+data
+)
+
+}
+
+);
+
+
+const result =
+await response.text();
+
+alert(result);
+
+document
+.getElementById(
+"feedbackForm"
+)
+.reset();
+
+}
+catch(error){
+
+alert(
+"Error submitting feedback"
+);
+
+console.log(
+error
+);
+
+}
+
+}
+
+);
+
 </script>
+
 </body>
+
 </html>
-                
-                
-                
-                
-                        
+```
