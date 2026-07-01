@@ -10,8 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI)
-.then(() => console.log("MongoDB Connected"))
+mongoose.connect(process.env.MONGODB_URI, {
+dbName: "feedbackDB"
+})
+.then(() => console.log("✅ MongoDB Connected"))
 .catch(err => console.log(err));
 
 // Feedback Schema
