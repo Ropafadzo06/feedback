@@ -1,4 +1,6 @@
+```html
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -53,10 +55,10 @@ margin-top:30px;
 background:white;
 }
 
-th,td{
+th,
+td{
 border:1px solid #ddd;
 padding:10px;
-text-align:left;
 }
 
 th{
@@ -71,23 +73,34 @@ background:#fafafa;
 
 </head>
 
+
 <body>
 
 <h1>Laboratory Feedback Dashboard</h1>
 
+
 <div class="dashboard-container">
 
 <div class="chart-container">
+
 <h2>Ratings Distribution</h2>
+
 <canvas id="ratingChart"></canvas>
+
 </div>
+
 
 <div class="chart-container">
+
 <h2>Tests Conducted</h2>
+
 <canvas id="testChart"></canvas>
+
 </div>
 
 </div>
+
+
 
 <h2>Recent Feedback</h2>
 
@@ -96,147 +109,329 @@ background:#fafafa;
 <thead>
 
 <tr>
+
 <th>Name</th>
+
 <th>Email</th>
+
+<th>Department</th>
+
 <th>Test</th>
+
 <th>Rating</th>
+
 <th>Feedback</th>
+
 <th>Date</th>
+
 </tr>
 
 </thead>
+
 
 <tbody id="feedbackTable"></tbody>
 
 </table>
 
+
+
+
 <script>
 
+
 let ratingChart = null;
+
 let testChart = null;
+
+
+
+
 
 async function loadRatingChart(){
 
 try{
 
-const response = await fetch("/rating-stats");
+const response =
+await fetch(
+"/rating-stats"
+);
 
 if(!response.ok){
-throw new Error("Could not load rating stats");
+
+throw new Error(
+"Could not load ratings"
+);
+
 }
 
-const data = await response.json();
 
-if(ratingChart){
+const data =
+await response.json();
+
+
+if(
+ratingChart
+){
+
 ratingChart.destroy();
+
 }
 
-ratingChart = new Chart(
-document.getElementById("ratingChart"),
+
+ratingChart =
+
+new Chart(
+
+document.getElementById(
+"ratingChart"
+),
+
 {
+
 type:"pie",
 
 data:{
-labels:data.map(item=>item.rating),
+
+labels:
+
+data.map(
+item=>
+item.rating
+),
 
 datasets:[
+
 {
-label:"Ratings",
-data:data.map(item=>item.total)
+
+label:
+"Ratings",
+
+data:
+
+data.map(
+item=>
+item.total
+)
+
 }
+
 ]
+
 }
+
 }
+
 );
 
-}catch(error){
+}
+
+catch(error){
 
 console.log(error);
 
 }
 
 }
+
+
+
+
+
 
 async function loadTestChart(){
 
 try{
 
-const response = await fetch("/test-stats");
+const response =
+await fetch(
+"/test-stats"
+);
 
 if(!response.ok){
-throw new Error("Could not load test stats");
+
+throw new Error(
+"Could not load tests"
+);
+
 }
 
-const data = await response.json();
 
-if(testChart){
+const data =
+await response.json();
+
+
+if(
+testChart
+){
+
 testChart.destroy();
+
 }
 
-testChart = new Chart(
-document.getElementById("testChart"),
+
+
+testChart =
+
+new Chart(
+
+document.getElementById(
+"testChart"
+),
+
 {
+
 type:"bar",
 
 data:{
-labels:data.map(item=>item.test_name),
+
+labels:
+
+data.map(
+item=>
+item.test_name
+),
 
 datasets:[
+
 {
-label:"Feedback Entries",
-data:data.map(item=>item.total)
+
+label:
+"Tests",
+
+data:
+
+data.map(
+item=>
+item.total
+)
+
 }
+
 ]
+
 }
+
 }
+
 );
 
-}catch(error){
+}
+
+catch(error){
 
 console.log(error);
 
 }
 
 }
+
+
+
+
+
+
 
 async function loadFeedbacks(){
 
 try{
 
-const response = await fetch("/feedbacks");
+const response =
+await fetch(
+"/feedbacks"
+);
 
-if(!response.ok){
-throw new Error("Could not load feedback");
+if(
+!response.ok
+){
+
+throw new Error(
+"Could not load feedback"
+);
+
 }
 
-const feedbacks = await response.json();
 
-const table = document.getElementById("feedbackTable");
+const feedbacks =
 
-table.innerHTML = "";
+await response.json();
 
-feedbacks.forEach(item=>{
+
+const table =
+
+document.getElementById(
+"feedbackTable"
+);
+
+
+table.innerHTML =
+"";
+
+
+
+feedbacks.forEach(
+item=>{
 
 table.innerHTML += `
+
 <tr>
-<td>${item.name || ""}</td>
-<td>${item.email || ""}</td>
-<td>${item.test_name || ""}</td>
-<td>${item.rating || ""}</td>
-<td>${item.feedback || ""}</td>
-<td>${item.date ? new Date(item.date).toLocaleDateString() : ""}</td>
+
+<td>
+${item.name||""}
+</td>
+
+<td>
+${item.email||""}
+</td>
+
+<td>
+${item.department||""}
+</td>
+
+<td>
+${item.test_name||""}
+</td>
+
+<td>
+${item.rating||""}
+</td>
+
+<td>
+${item.feedback||""}
+</td>
+
+<td>
+${item.date
+?
+new Date(
+item.date
+)
+.toLocaleDateString()
+:
+""}
+</td>
+
 </tr>
+
 `;
 
-});
+}
 
-}catch(error){
+);
+
+}
+
+catch(error){
 
 console.log(error);
 
 }
 
 }
+
+
+
+
+
 
 async function refreshDashboard(){
 
@@ -248,20 +443,34 @@ await loadFeedbacks();
 
 }
 
-window.onload = function(){
+
+
+
+
+window.onload =
+function(){
 
 refreshDashboard();
 
-setInterval(() => {
+setInterval(
+
+()=>{
 
 refreshDashboard();
 
-}, 10000);
+},
+
+10000
+
+);
 
 };
 
+
 </script>
+
 
 </body>
 
 </html>
+```
