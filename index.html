@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,13 +57,11 @@ Help us improve our laboratory services by sharing your experience.
 
 <div class="container">
 
-
 <section id="feedback" class="feedback-section">
 
 <h2>Patient Feedback Form</h2>
 
 <form id="feedbackForm">
-
 
 <label>Full Name</label>
 
@@ -84,34 +81,50 @@ required
 placeholder="Enter your email">
 
 
-<label>Department</label>
+<label>Did you get all the tests you requested for?</label>
 
-<select id="department" required>
+<select id="received_all_tests" required>
 
-<option value="">Select Department</option>
+<option value="">Select</option>
 
-<option>Biochemistry</option>
+<option>Yes</option>
 
-<option>Haematology</option>
-
-<option>Immunology/Serology</option>
-
-<option>Microbiology</option>
-
-<option>Genomics</option>
-
-<option>Cytology</option>
-
-<option>Histopathology</option>
+<option>No</option>
 
 </select>
 
 
-<label>Test Conducted</label>
+<label>Did you receive your results within an acceptable time?</label>
 
-<select id="test_name" required>
+<select id="results_on_time" required>
 
-<option value="">Select Test</option>
+<option value="">Select</option>
+
+<option>Yes</option>
+
+<option>No</option>
+
+</select>
+
+
+<label>Are there any tests you would suggest Medlabs consider offering?</label>
+
+<textarea
+id="suggested_tests"
+rows="3"
+placeholder="Enter your suggestion (optional)">
+</textarea>
+
+
+<label>Were the results credible?</label>
+
+<select id="results_credible" required>
+
+<option value="">Select</option>
+
+<option>Yes</option>
+
+<option>No</option>
 
 </select>
 
@@ -133,7 +146,7 @@ placeholder="Enter your email">
 </select>
 
 
-<label>Your Feedback</label>
+<label>Comment</label>
 
 <textarea
 id="feedbackText"
@@ -160,7 +173,7 @@ Submit Feedback
 
 <p>
 
-Select a department in the feedback form to see tests.
+Thank you for taking the time to complete our patient satisfaction survey. Your feedback helps us improve the quality of our laboratory services.
 
 </p>
 
@@ -182,252 +195,8 @@ Select a department in the feedback form to see tests.
 
 <script>
 
-
-const tests = {
-
-
-Biochemistry:[
-
-"24 hour Urine Protein",
-
-"Vitamin D",
-
-"Alanine Transaminase",
-
-"Albumin",
-
-"Amylase",
-
-"Blood Urea Nitrogen",
-
-"Cardiac Enzymes",
-
-"Creatinine",
-
-"Electrolytes",
-
-"Ferritin",
-
-"Glucose Fasting",
-
-"HBA1C",
-
-"Insulin",
-
-"Lipid Profile",
-
-"Liver Function Test",
-
-"Magnesium",
-
-"Prolactin",
-
-"Thyroid Function Tests",
-
-"Troponin",
-
-"Urea and Electrolytes",
-
-"Vitamin B12"
-
-],
-
-
-Haematology:[
-
-"Blood Grouping",
-
-"Blood Parasites",
-
-"CD4 Count",
-
-"D-Dimer",
-
-"ESR",
-
-"Full Blood Count (FBC)",
-
-"Haemoglobin Electrophoresis",
-
-"Malaria ICT",
-
-"Protein C",
-
-"Protein S",
-
-"Prothrombin Time",
-
-"Reticulocyte Count",
-
-"Sickle Cell Screen"
-
-],
-
-
-"Immunology/Serology":[
-
-"Allergy Test",
-
-"Hepatitis B Screen",
-
-"Hepatitis C",
-
-"HIV Viral Load",
-
-"HIV Antibody",
-
-"Rubella",
-
-"SARS-CoV-2 PCR",
-
-"Syphilis Test",
-
-"TORCH PANEL"
-
-],
-
-
-Microbiology:[
-
-"Blood Culture",
-
-"Cryptococcus Antigen",
-
-"Fungal Culture",
-
-"GeneXpert MTB",
-
-"H.Pylori",
-
-"High Vaginal Swab",
-
-"HPV PCR",
-
-"Pregnancy Test",
-
-"Semen Analysis",
-
-"Stool MCS",
-
-"Urine Analysis",
-
-"Urine Culture"
-
-],
-
-
-Genomics:[
-
-"Clostridium difficile DNA PCR",
-
-"STI 12 Panel",
-
-"HPV 20 Panel",
-
-"Meningo-encephalitis PCR",
-
-"Respiratory Virus PCR",
-
-"Stool Multiplex PCR"
-
-],
-
-
-Cytology:[
-
-"Cytology Fluids",
-
-"Cytology FNA",
-
-"PAP Test",
-
-"Gastric Washings",
-
-"Cervical Screening"
-
-],
-
-
-Histopathology:[
-
-"Category 1",
-
-"Category 2",
-
-"Category 3",
-
-"Histology",
-
-"Ophid Leep",
-
-"Trephine Processing"
-
-]
-
-};
-
-
-
 document
-.getElementById("department")
-.addEventListener(
-"change",
-function(){
-
-const selected =
-this.value;
-
-const testsList =
-document
-.getElementById(
-"test_name"
-);
-
-testsList.innerHTML =
-`<option value="">Select Test</option>`;
-
-
-if(
-tests[selected]
-){
-
-tests[selected]
-.forEach(
-test=>{
-
-const option =
-document
-.createElement(
-"option"
-);
-
-option.value =
-test;
-
-option.textContent =
-test;
-
-testsList
-.appendChild(
-option
-);
-
-}
-
-);
-
-}
-
-}
-
-);
-
-
-
-document
-.getElementById(
-"feedbackForm"
-)
+.getElementById("feedbackForm")
 .addEventListener(
 "submit",
 
@@ -435,53 +204,49 @@ async function(e){
 
 e.preventDefault();
 
-
 const data = {
 
 name:
 document
-.getElementById(
-"name"
-)
+.getElementById("name")
 .value,
 
 email:
 document
-.getElementById(
-"email"
-)
+.getElementById("email")
 .value,
 
-department:
+received_all_tests:
 document
-.getElementById(
-"department"
-)
+.getElementById("received_all_tests")
 .value,
 
-test_name:
+results_on_time:
 document
-.getElementById(
-"test_name"
-)
+.getElementById("results_on_time")
+.value,
+
+suggested_tests:
+document
+.getElementById("suggested_tests")
+.value,
+
+results_credible:
+document
+.getElementById("results_credible")
 .value,
 
 rating:
 document
-.getElementById(
-"rating"
-)
+.getElementById("rating")
 .value,
 
 feedback:
 document
-.getElementById(
-"feedbackText"
-)
+.getElementById("feedbackText")
 .value
 
 };
-
 
 try{
 
@@ -490,23 +255,18 @@ await fetch(
 "/submit-feedback",
 {
 
-method:
-"POST",
+method:"POST",
 
 headers:{
-"Content-Type":
-"application/json"
+"Content-Type":"application/json"
 },
 
 body:
-JSON.stringify(
-data
-)
+JSON.stringify(data)
 
 }
 
 );
-
 
 const result =
 await response.text();
@@ -514,21 +274,16 @@ await response.text();
 alert(result);
 
 document
-.getElementById(
-"feedbackForm"
-)
+.getElementById("feedbackForm")
 .reset();
 
 }
+
 catch(error){
 
-alert(
-"Error submitting feedback"
-);
+alert("Error submitting feedback");
 
-console.log(
-error
-);
+console.log(error);
 
 }
 
@@ -541,4 +296,3 @@ error
 </body>
 
 </html>
-```
